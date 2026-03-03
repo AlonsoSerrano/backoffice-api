@@ -1,5 +1,5 @@
 
-import { RateLimiterService } from "../../infrastructure/security/rate-imiter.service";
+import { RateLimiterService } from "../../../infrastructure/security/rate-imiter.service";
 
 export const rateLimit = (rateLimiter: RateLimiterService) => ({
   beforeHandle({ request, set }: any) {
