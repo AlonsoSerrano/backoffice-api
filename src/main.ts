@@ -1,6 +1,5 @@
 import { userController } from './interfaces/http/controller/user.controller';
 import { createServer } from "./interfaces/http/server";
-import { env } from "./infrastructure/config/env";
 import { connectMongo } from "./infrastructure/database/mongo.connection";
 import { MongoUserRepository } from "./infrastructure/repositories/mongo-user.repository";
 import { CreateUserUseCase } from "./application/use-cases/create-user";
@@ -8,7 +7,12 @@ import { JwtService } from './infrastructure/auth/jwt.service';
 import { LoginUseCase } from './application/use-cases/login.usecase';
 import { authController } from './interfaces/http/controller/auth.controller';
 import { GetUsersUseCase } from './application/use-cases/get-users.usecase';
+import { RateLimiterService } from './infrastructure/security/rate-imiter.service';
+import { env } from './infrastructure/config/env';
 await connectMongo();
+
+const rateLimiter = new RateLimiterService(env.rateLimitTry, env.rateLimitTime); 
+
 
 const userRepository = new MongoUserRepository();
 const jwtService = new JwtService();
@@ -24,8 +28,8 @@ const loginUseCase = new LoginUseCase(
 );
 
 const app = createServer()
-.use(userController(createUserUseCase, getUsersUseCase,jwtService))
-.use(authController(loginUseCase));
+.use(userController(createUserUseCase, getUsersUseCase,jwtService,rateLimiter))
+.use(authController(loginUseCase, rateLimiter));
 
 app.listen(env.port);
 
