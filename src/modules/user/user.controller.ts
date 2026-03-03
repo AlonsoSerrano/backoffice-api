@@ -1,7 +1,7 @@
 import { Elysia } from "elysia";
 import { CreateUserUseCase } from "../../application/use-cases/create-user";
 import { JwtService } from "../../infrastructure/auth/jwt.service";
-import { GetUsersUseCase } from '../../application/use-cases/get-users.usecase';
+import { GetUsersUseCase } from "../../application/use-cases/get-users.usecase";
 import { RateLimiterService } from "../../infrastructure/security/rate-imiter.service";
 import { rateLimit } from "../../interfaces/http/middleware/rate-limiter.middleware";
 import { requireAuth } from "../../interfaces/http/middleware/auth.middleware";
@@ -15,52 +15,48 @@ export const userController = (
   jwtService: JwtService,
   ratelimiter: RateLimiterService,
   updateUserUseCase: UpdateUserUseCase,
-  deleteUserUseCase: DeleteUserUseCase
+  deleteUserUseCase: DeleteUserUseCase,
 ) =>
   new Elysia({ prefix: "/users" })
 
-    .guard(
-      rateLimit(ratelimiter),
-      app =>
-        app.post("/", async ({ body }) => {
-          const { email, password } = body as any;
+    .guard(rateLimit(ratelimiter), (app) =>
+      app.post("/", async ({ body }) => {
+        const { email, password } = body as any;
 
-          const user = await createUserUseCase.execute(
-            email,
-            password
-          );
+        const user = await createUserUseCase.execute(email, password);
 
-          return {
-            id: user.id,
-            email: user.email,
-            role: user.role
-          };
-        })
+        return {
+          id: user.id,
+          email: user.email,
+          role: user.role,
+        };
+      }),
     )
 
     .guard(
       {
         ...requireAuth(jwtService),
-        ...rateLimit(ratelimiter)
+        ...rateLimit(ratelimiter),
       },
 
-      app =>
-
+      (app) =>
         app
           .get("/getAll", async () => {
             const users = await getUsersUseCase.execute();
 
-            return users.map(user => ({
+            return users.map((user) => ({
               id: user.id,
               email: user.email,
-              role: user.role
+              role: user.role,
             }));
-
           })
 
           .put("/:id", async ({ params, body }) => {
             const { id } = params;
-            const dto: UpdateUserDTO = { id, ...(body as Omit<UpdateUserDTO, "id">) };
+            const dto: UpdateUserDTO = {
+              id,
+              ...(body as Omit<UpdateUserDTO, "id">),
+            };
 
             return await updateUserUseCase.execute(dto);
           })
@@ -68,5 +64,5 @@ export const userController = (
           .delete("/:id", async ({ params }) => {
             const { id } = params;
             return await deleteUserUseCase.execute(id);
-          })
+          }),
     );

@@ -2,7 +2,7 @@ import { RateLimiterService } from "../../infrastructure/security/rate-imiter.se
 import { env } from "../../infrastructure/config/env";
 import { JwtService } from "../../infrastructure/auth/jwt.service";
 import { MongoProjectRepository } from "../../infrastructure/repositories/mongo-project.repository";
-import { CreateProjectUseCase } from '../../application/project-use-cases/create-project.usecase';
+import { CreateProjectUseCase } from "../../application/project-use-cases/create-project.usecase";
 import { FindProjectByIdUseCase } from "../../application/project-use-cases/find-project-by-id.usecase";
 import { FindAllProjectsUseCase } from "../../application/project-use-cases/find-all-projects.usecase";
 import { UpdateProjectUseCase } from "../../application/project-use-cases/update-project.usecase";
@@ -16,22 +16,21 @@ export const ProjectModule = () => {
   );
   const jwtService = new JwtService();
 
+  const projectRepository = new MongoProjectRepository();
 
-const projectRepository = new MongoProjectRepository();
-
-const createProjectUseCase = new CreateProjectUseCase(projectRepository);
-const findProjectByIdUseCase = new FindProjectByIdUseCase(projectRepository);
-const findAllProjectsUseCase = new FindAllProjectsUseCase(projectRepository);
-const updateProjectUseCase = new UpdateProjectUseCase(projectRepository);
-const deleteProjectUseCase = new DeleteProjectUseCase(projectRepository);
+  const createProjectUseCase = new CreateProjectUseCase(projectRepository);
+  const findProjectByIdUseCase = new FindProjectByIdUseCase(projectRepository);
+  const findAllProjectsUseCase = new FindAllProjectsUseCase(projectRepository);
+  const updateProjectUseCase = new UpdateProjectUseCase(projectRepository);
+  const deleteProjectUseCase = new DeleteProjectUseCase(projectRepository);
 
   return projectController(
-      createProjectUseCase,
-      findProjectByIdUseCase,
-      findAllProjectsUseCase,
-      updateProjectUseCase,
-      deleteProjectUseCase,
-      jwtService,
-      rateLimiter,
+    createProjectUseCase,
+    findProjectByIdUseCase,
+    findAllProjectsUseCase,
+    updateProjectUseCase,
+    deleteProjectUseCase,
+    jwtService,
+    rateLimiter,
   );
 };

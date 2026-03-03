@@ -8,7 +8,7 @@ export class RateLimiterService {
 
   constructor(
     private readonly maxRequests: number,
-    private readonly windowMs: number
+    private readonly windowMs: number,
   ) {}
 
   isAllowed(key: string): boolean {
@@ -18,7 +18,7 @@ export class RateLimiterService {
     if (!entry) {
       this.store.set(key, {
         count: 1,
-        expiresAt: now + this.windowMs
+        expiresAt: now + this.windowMs,
       });
       return true;
     }
@@ -26,7 +26,7 @@ export class RateLimiterService {
     if (now > entry.expiresAt) {
       this.store.set(key, {
         count: 1,
-        expiresAt: now + this.windowMs
+        expiresAt: now + this.windowMs,
       });
       return true;
     }

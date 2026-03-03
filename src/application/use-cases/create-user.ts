@@ -3,9 +3,10 @@ import { User } from "../../domain/entities/User";
 import { AuthService } from "../services/auth.service";
 
 export class CreateUserUseCase {
-
-  constructor(private userRepository: UserRepository, 
-              private authService: AuthService) { }
+  constructor(
+    private userRepository: UserRepository,
+    private authService: AuthService,
+  ) {}
 
   async execute(email: string, password: string) {
     const existing = await this.userRepository.findByEmail(email);
@@ -15,9 +16,8 @@ export class CreateUserUseCase {
     }
 
     // se hace hash de pw para guardarla encriptada
-    console.log("LLEGA ANTES DEL HASH "+ password)
-    const hashed = await this.authService.hash(password); 
-    
+    console.log("LLEGA ANTES DEL HASH " + password);
+    const hashed = await this.authService.hash(password);
 
     const user = User.create(email, hashed);
 

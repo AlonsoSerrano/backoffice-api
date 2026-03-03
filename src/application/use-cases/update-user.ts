@@ -2,11 +2,10 @@ import { UserRepository } from "../../domain/repositories/UserRepository";
 import { AuthService } from "../services/auth.service";
 import { UpdateUserDTO } from "../dto/update-user.dto";
 
-
 export class UpdateUserUseCase {
   constructor(
     private userRepository: UserRepository,
-    private authService: AuthService
+    private authService: AuthService,
   ) {}
 
   async execute(data: UpdateUserDTO) {
@@ -24,13 +23,13 @@ export class UpdateUserUseCase {
       ...user,
       email: data.email ?? user.email,
       password: updatedPassword,
-      role: data.role ?? user.role
+      role: data.role ?? user.role,
     });
 
     return {
       id: updatedUser.id,
       email: updatedUser.email,
-      role: updatedUser.role
+      role: updatedUser.role,
     };
   }
 }
