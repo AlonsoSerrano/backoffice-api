@@ -1,13 +1,13 @@
 import { Elysia } from "elysia";
-import { CreateUserUseCase } from "../../../application/use-cases/create-user";
-import { JwtService } from "../../../infrastructure/auth/jwt.service";
-import { GetUsersUseCase } from '../../../application/use-cases/get-users.usecase';
-import { RateLimiterService } from "../../../infrastructure/security/rate-imiter.service";
-import { rateLimit } from "../middleware/rate-limiter.middleware";
-import { requireAuth } from "../middleware/auth.middleware";
-import { UpdateUserUseCase } from "../../../application/use-cases/update-user";
-import { DeleteUserUseCase } from "../../../application/use-cases/delete-user.usecase";
-import { UpdateUserDTO } from "../../../application/dto/update-user.dto";
+import { CreateUserUseCase } from "../../application/use-cases/create-user";
+import { JwtService } from "../../infrastructure/auth/jwt.service";
+import { GetUsersUseCase } from '../../application/use-cases/get-users.usecase';
+import { RateLimiterService } from "../../infrastructure/security/rate-imiter.service";
+import { rateLimit } from "../../interfaces/http/middleware/rate-limiter.middleware";
+import { requireAuth } from "../../interfaces/http/middleware/auth.middleware";
+import { UpdateUserUseCase } from "../../application/use-cases/update-user";
+import { DeleteUserUseCase } from "../../application/use-cases/delete-user.usecase";
+import { UpdateUserDTO } from "../../application/dto/update-user.dto";
 
 export const userController = (
   createUserUseCase: CreateUserUseCase,

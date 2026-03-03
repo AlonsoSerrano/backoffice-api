@@ -1,7 +1,7 @@
 import { Elysia } from "elysia";
-import { LoginUseCase } from "../../../application/use-cases/login.usecase";
-import { RateLimiterService } from "../../../infrastructure/security/rate-imiter.service";
-import { rateLimit } from "../middleware/rate-limiter.middleware";
+import { LoginUseCase } from "../../application/use-cases/login.usecase";
+import { RateLimiterService } from "../../infrastructure/security/rate-imiter.service";
+import { rateLimit } from "../../interfaces/http/middleware/rate-limiter.middleware";
 
 
 export const authController = (
