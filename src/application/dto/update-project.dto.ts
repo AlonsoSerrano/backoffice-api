@@ -1,5 +1,5 @@
 export interface UpdateProjectDTO {
-  id:string
+  id: string;
   name: string;
   description: string;
   ownerId: string;

@@ -7,7 +7,7 @@ export class FindProjectByIdUseCase {
     const project = await this.projectRepository.findById(id);
 
     if (!project) {
-      throw new Error("no se encontro un proyecto para el id "+ id);
+      throw new Error("no se encontro un proyecto para el id " + id);
     }
 
     return project;

@@ -9,8 +9,8 @@ import { CreateProjectDTO } from "../../application/dto/create-project.dto";
 import { FindProjectByIdUseCase } from "../../application/project-use-cases/find-project-by-id.usecase";
 import { FindAllProjectsUseCase } from "../../application/project-use-cases/find-all-projects.usecase";
 import { UpdateProjectDTO } from "../../application/dto/update-project.dto";
-import { UpdateProjectUseCase } from '../../application/project-use-cases/update-project.usecase';
-import { DeleteProjectUseCase } from '../../application/project-use-cases/delete-project.usecase';
+import { UpdateProjectUseCase } from "../../application/project-use-cases/update-project.usecase";
+import { DeleteProjectUseCase } from "../../application/project-use-cases/delete-project.usecase";
 
 export const projectController = (
   createProjectUseCase: CreateProjectUseCase,
@@ -75,8 +75,8 @@ export const projectController = (
           return await updateProjectUseCase.execute(dto);
         })
 
-         .delete("/:id", async ({ params }) => {
-            const { id } = params;
-            return await deleteProjectUseCase.execute(id);
-          })
+        .delete("/:id", async ({ params }) => {
+          const { id } = params;
+          return await deleteProjectUseCase.execute(id);
+        }),
   );
