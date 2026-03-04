@@ -1,0 +1,332 @@
+{
+    "openapi": "3.0.3",
+    "info": {
+        "title": "BackOffice API",
+        "description": "API para gestion de usuarios y proyectos",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/users/": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Crear usuario",
+                "description": "Crea un nuevo usuario en base de datos",
+                "operationId": "postUsers",
+                "requestBody": {
+                    "requiered": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/user_schema"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {}
+                }
+            }
+        },
+        "/users/getAll": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Obtener lista de usuarios",
+                "description": "Obtener lista de usuarios existentes en base de datos",
+                "operationId": "getUsersGetAll",
+                "responses": {
+                    "200": {}
+                }
+            }
+        },
+        "/users/{id}": {
+            "put": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Obtener usuario",
+                "description": "Obtener usuario especifico por id",
+                "operationId": "putUsersById",
+                "parameters": [
+                    {
+                        "schema": {
+                            "type": "string",
+                            "description": " id de usuario",
+                            "example": "69a66353cad1de3c602654ff"
+                        },
+                        "in": "path",
+                        "name": "id",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {}
+                }
+            },
+            "delete": {
+                "operationId": "deleteUsersById",
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Elimiar usuario",
+                "description": "Elimina un usuario de Base de datos por Id",
+                "parameters": [
+                    {
+                        "schema": {
+                            "type": "string",
+                            "description": " id de usuario",
+                            "example": "69a66353cad1de3c602654ff"
+                        },
+                        "in": "path",
+                        "name": "id",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {}
+                }
+            }
+        },
+        "/auth/login": {
+            "post": {
+                "tags": [
+                    "Login"
+                ],
+                "summary": "Inisiar sesion",
+                "description": "Servicio de logueo de usuarios devuelve un token",
+                "operationId": "postAuthLogin",
+                "requestBody": {
+                    "requiered": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/user_schema"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {}
+                }
+            }
+        },
+        "/project/": {
+            "post": {
+                "tags": [
+                    "Proyect"
+                ],
+                "summary": "Crear proyecto",
+                "description": "Registra un nuevo proyecto en Base de Datos",
+                "operationId": "postProject",
+                "requestBody": {
+                    "requiered": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/project_schema"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {}
+                }
+            }
+        },
+        "/project/{id}": {
+            "get": {
+                "tags": [
+                    "Proyect"
+                ],
+                "summary": "Obtener proyecto",
+                "description": "Obtiene un proyecto en especifico por id",
+                "operationId": "getProjectById",
+                "parameters": [
+                    {
+                        "schema": {
+                            "type": "string",
+                            "description": " id de proyecto",
+                            "example": "69a72200d82dc1839bc95509"
+                        },
+                        "in": "path",
+                        "name": "id",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {}
+                }
+            },
+            "put": {
+                "tags": [
+                    "Proyect"
+                ],
+                "summary": "Actualizar proyecto",
+                "description": "Actualiza un proyecto en Base de Datos por id",
+                "operationId": "putProjectById",
+                "requestBody": {
+                    "requiered": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/updated_project_schema"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {}
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Proyect"
+                ],
+                "summary": "Eliminar proyecto",
+                "description": "elimina el registro de un proyecto de la base de datos",
+                "operationId": "deleteProjectById",
+                "parameters": [
+                    {
+                        "schema": {
+                            "type": "string",
+                            "description": " id de proyecto",
+                            "example": "69a72200d82dc1839bc95509"
+                        },
+                        "in": "path",
+                        "name": "id",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {}
+                }
+            }
+        },
+        "/project/findAll": {
+            "get": {
+                "tags": [
+                    "Proyect"
+                ],
+                "summary": "Obtener lista de proyectos",
+                "description": "Obtiene una lista de proyectos existentes en base de datos",
+                "operationId": "getProjectFindAll",
+                "responses": {
+                    "200": {}
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "project_schema": {
+                "type": "object",
+                "required": [
+                    "name",
+                    "description",
+                    "ownerId"
+                ],
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": " nombre del nuevo proyecto",
+                        "example": "proyecto Backoffice"
+                    },
+                    "ownerId": {
+                        "type": "string",
+                        "description": " cnombre del propietario",
+                        "example": "Alonso"
+                    },
+                    "description": {
+                        "type": "string",
+                        "description": " descripcion del proyecto",
+                        "example": "BackOffice API para gestion de usuarios y proyectos"
+                    }
+                },
+                "additionalProperties": false
+            },
+            "updated_user_schema": {
+                "type": "object",
+                "required": [
+                    "email",
+                    "password",
+                    "role"
+                ],
+                "properties": {
+                    "role": {
+                        "type": "string",
+                        "description": " rol del usuario ",
+                        "example": "ADMIN"
+                    },
+                    "email": {
+                        "type": "string",
+                        "description": "correo electronico debe ser unico para cada usuario",
+                        "example": "prueba.insert@test.com",
+                        "format": "email"
+                    },
+                    "password": {
+                        "type": "string",
+                        "description": " contraseña con almenos 8 caracteres",
+                        "example": "abcd1234"
+                    }
+                },
+                "additionalProperties": false
+            },
+            "user_schema": {
+                "type": "object",
+                "required": [
+                    "email",
+                    "password"
+                ],
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "description": "correo electronico debe ser unico para cada usuario",
+                        "example": "prueba.insert@test.com",
+                        "format": "email"
+                    },
+                    "password": {
+                        "type": "string",
+                        "description": " contraseña con almenos 8 caracteres",
+                        "example": "abcd1234"
+                    }
+                },
+                "additionalProperties": false
+            },
+            "updated_project_schema": {
+                "type": "object",
+                "required": [
+                    "name",
+                    "description",
+                    "ownerId",
+                    "progress"
+                ],
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": " nombre del nuevo proyecto",
+                        "example": "proyecto Backoffice"
+                    },
+                    "ownerId": {
+                        "type": "string",
+                        "description": " cnombre del propietario",
+                        "example": "Alonso"
+                    },
+                    "progress": {
+                        "type": "string",
+                        "description": " avance del proyecto",
+                        "example": "80 %"
+                    },
+                    "description": {
+                        "type": "string",
+                        "description": " descripcion del proyecto",
+                        "example": "BackOffice API para gestion de usuarios y proyectos"
+                    }
+                },
+                "additionalProperties": false
+            }
+        }
+    }
+}
